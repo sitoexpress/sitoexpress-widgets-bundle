@@ -1,0 +1,80 @@
+.se-video:not(.background) {
+  margin-bottom: 2.5em;
+}
+.no_controls .plyr__controls,
+.no_controls .plyr__control {
+  display: none !important;
+}
+.plyr__poster {
+  pointer-events: none;
+}
+.simple-plyr .plyr__poster {
+  pointer-events: auto;
+  background-size: cover;
+}
+.background .plyr__controls,
+.background .plyr__control {
+  display: none !important;
+}
+.video-bg-row {
+  overflow-y: hidden;
+  position: relative;
+}
+.video-bg-row .so-panel:not(.widget_se-video-widget) {
+  z-index: 1;
+  position: relative;
+}
+.video-bg-row .so-panel.widget_se-video-widget {
+  height: 0;
+  margin: 0 !important;
+}
+.se-video-parent.background,
+.se-video-parent.background .plyr__video-embed {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.se-video-parent.background .plyr__video-embed {
+  position: absolute;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+}
+.se-video-parent.background .plyr {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.se-video-parent.background .plyr__video-embed .plyr__video-embed__container {
+  width: 100%;
+}
+.se-video-parent.background .plyr--video {
+  justify-content: center;
+}
+.se-video-parent.background .se-video {
+  pointer-events: none !important;
+}
+.se-video-parent.background .plyr--full-ui .plyr__video-embed > .plyr__video-embed__container {
+  transform: none !important;
+  width: auto;
+  height: 100%;
+  z-index: 9;
+  aspect-ratio: 16/9;
+}
+
+@media screen and (orientation: landscape) {
+  .se-video-parent.background .plyr--full-ui .plyr__video-embed > .plyr__video-embed__container {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .se-video-parent.background .plyr--full-ui .plyr__video-embed > .plyr__video-embed__container {
+    width: auto;
+    height: 100%;
+  }
+}
