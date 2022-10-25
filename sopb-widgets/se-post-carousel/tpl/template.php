@@ -31,10 +31,4 @@ if(have_posts()) { ?>
 ?>
 
 </div>
-<!--<pre>
-  <?php
-  global $siteorigin_widgets_inline_styles;
-  echo print_r($siteorigin_widgets_inline_styles, true); ?>
-</pre>-->
-
 <?php $context->restore(); ?>
