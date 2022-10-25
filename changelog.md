@@ -2,6 +2,11 @@
 This changelog will still be used to keep track of changes, as the github repo won't necessarily follow our internal release history.
 * Current release: 0.8
 
+## v.0.9
+* video:    added 'simple-control' mode where only a large play button appears with no bar
+* video:    video can be stopped by tapping video center
+* carousel: created post carousel widget
+
 ## v.0.8
 * popup:        added fullscreen toggle for Popup
 * popup:        fixed cf7 breaking block in template.php

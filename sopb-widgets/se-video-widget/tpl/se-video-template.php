@@ -12,7 +12,7 @@
  */
 
 $poster = (wp_get_attachment_image_src($instance['cover'], 'big-800')) ? wp_get_attachment_image_src($instance['cover'], 'big-800')[0] : '';
-$classes = (empty($instance['settings']['autoplay']) && empty($instance['settings']['background'])) ? "simple-plyr ".$source : implode(" ", $instance['settings'])." ".$source;
+$classes = (!in_array('autoplay', $instance['settings']) && !in_array('background', $instance['settings'])) ? "simple-plyr ".$source : implode(" ", $instance['settings'])." ".$source;
 $url = ($source == 'vimeo') ? $url.'?dnt=1' : $url;
 
 ?>

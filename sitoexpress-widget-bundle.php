@@ -6,13 +6,13 @@ Plugin Name: SE SiteOrigin Widgets Bundle
 Description: Adds some Custom Widgets to SOPB
 Author: Sito.Express
 Author URI: https://sito.express
-Version: 0.8
+Version: 0.9
 License: GPL v3
 Text Domain: se-sopb-widget
 
 */
 
-define('SPB_VER', 'v.0.8');
+define('SPB_VER', 'v.0.9');
 define('SPB_DIR', plugin_dir_path(__FILE__));
 define('SPB_URL', plugin_dir_url(__FILE__));
 
