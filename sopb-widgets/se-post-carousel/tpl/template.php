@@ -31,4 +31,5 @@ if(have_posts()) { ?>
 ?>
 
 </div>
+
 <?php $context->restore(); ?>

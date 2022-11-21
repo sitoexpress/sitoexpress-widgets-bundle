@@ -205,10 +205,12 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
   }
 
   function enqueue_widget_scripts( $instance ) {
+    
     wp_enqueue_script('slick-carousel','https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array('jquery','sauce-script'), SPB_VER, true);
     wp_enqueue_style('slick-carousel','https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css', '', true);
     wp_enqueue_style('slick-custom', SPB_URL.'sopb-widgets/se-post-carousel/styles/se-carousel.css', array('slick-carousel'), SPB_VER);
-    wp_add_inline_script( 'slick-carousel', '$(".so-widget-se-post-carousel-widget .se-carousel").each(function() { $(this).slick() });' );
+    wp_enqueue_script('slick-init', SPB_URL.'sopb-widgets/se-post-carousel/js/se-carousel.js', array('slick-carousel'), SPB_VER, true);
+
     do_action('se_post_carousel_frontend_enqueue');
   }
 

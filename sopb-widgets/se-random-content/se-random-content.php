@@ -102,7 +102,7 @@ class SE_Random_Content_Widget extends SiteOrigin_Widget {
       if ( empty( $instance ) ) return array();
 
       $max = count($instance['content_repeater']);
-      $rand = mt_rand(1, $max - 1);
+      $rand = mt_rand(0, $max - 1);
 
   		return array(
   			'contents' => $instance['content_repeater'][$rand]

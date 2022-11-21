@@ -27,7 +27,7 @@ if(function_exists('sauce_create_popup')) {
 
 } else { ?>
 
- <div class="se-pop-widget-wrap">
+ <div class="se-pop-widget-wrap <?php echo $trigger_align; ?>">
    <div class="popup-parent-css">
      <div class="popup se-pop-widget-popup">
        <div class="popup-wrapper">
@@ -39,7 +39,7 @@ if(function_exists('sauce_create_popup')) {
        </div>
      </div>
    </div>
-   <div class="popup-trigger <?php echo $trigger_align; ?>">
+   <div class="popup-trigger">
     <?php if($trigger_type == 'image') { echo $image; } else { echo $button; } ?>
    </div>
  </div>
