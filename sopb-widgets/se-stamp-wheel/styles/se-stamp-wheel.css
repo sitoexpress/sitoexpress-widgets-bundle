@@ -1,0 +1,39 @@
+.stamp-wheel-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stamp-wheel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.se-stamp-wheel svg {
+  height: auto;
+  transform-origin: center;
+  width: 95%;
+  animation: wheelrotation 100s infinite ease-out;
+}
+
+.stamp-wheel-img img {
+  width: 70%;
+}
+
+@keyframes wheelrotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

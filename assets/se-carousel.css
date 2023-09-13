@@ -1,0 +1,13 @@
+.widget .se-images-carousel {
+  position: relative;
+}
+
+.thumb-a,
+.thumb-a img {
+  display: block;
+}
+
+button.splide__arrow:focus,
+button.splide__arrow:hover {
+  background-color: #CCC;
+}

@@ -1,6 +1,9 @@
 .se-video:not(.background) {
   margin-bottom: 2.5em;
 }
+.se-video:not(.background):first-child:last-child {
+  margin-bottom: 0;
+}
 .no_controls .plyr__controls,
 .no_controls .plyr__control {
   display: none !important;
@@ -53,6 +56,9 @@
 }
 .se-video-parent.background .plyr--video {
   justify-content: center;
+}
+.youtube .se-video:not(.background) iframe {
+  transform: scale(1.3);
 }
 .se-video-parent.background .se-video {
   pointer-events: none !important;

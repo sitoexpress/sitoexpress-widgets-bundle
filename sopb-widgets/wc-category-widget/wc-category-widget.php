@@ -81,11 +81,11 @@ class WC_Category_Widget extends SiteOrigin_Widget {
       foreach($terms as $term) {
         $options[$term->term_id] = $term->name;
       } */
-      $options = $this->get_terms_hierarchical(get_terms( array(
+      $options = (taxonomy_exists('product_cat')) ? $this->get_terms_hierarchical(get_terms( array(
         'taxonomy' => 'product_cat',
         'hide_empty' => 0,
         'fields' => 'all'
-      )));
+      ))) : array('none' => 'WooCommerce Not Found');
       return $options;
     }
 

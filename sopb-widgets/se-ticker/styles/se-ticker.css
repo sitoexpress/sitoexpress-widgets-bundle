@@ -1,0 +1,16 @@
+.ticker-item {
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: center;
+  cursor: default;
+}
+
+.ticker-item p {
+  cursor: default;
+}
+
+/* Ensures other JS script do not make too many mistakes in calculating body height in cas flickity js runs later */
+
+.ticker-inner:not(.flickity-enabled) {
+  display: flex;
+}

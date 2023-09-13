@@ -1,0 +1,12 @@
+div.siteorigin-widget-form div.siteorigin-widget-field.siteorigin-widget-field-type-repeater .siteorigin-widget-field-repeater .siteorigin-widget-field-repeater-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.siteorigin-widget-form div.siteorigin-widget-field.siteorigin-widget-field-type-repeater .siteorigin-widget-field-repeater .siteorigin-widget-field-repeater-items .siteorigin-widget-field-repeater-item {
+  width: 33.3%;
+}
+
+div[data-repeater-name="content_repeater"] .siteorigin-widget-field-repeater-item-top h4 {
+  text-transform: capitalize;
+}

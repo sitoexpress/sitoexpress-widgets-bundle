@@ -1,0 +1,38 @@
+.animated-text::after {
+  clear: both;
+  display: table;
+  content: '';
+}
+
+.animated-button {
+  margin-top: 2em;
+}
+
+.animated-content.texts {
+  position: relative;
+}
+
+.animated-item.text {
+  transition: transform .75s ease-in-out, opacity .75s ease-in-out;
+}
+
+.animated-item.text {
+  transform: rotate(0) translateX(-30px);
+}
+
+.animated-item.text .alignleft {
+  float: left;
+  margin-right: 1.5em;
+}
+
+.animated-button {
+  transition-delay: 0.25s !important;
+}
+
+.animated-button a {
+  text-align: center;
+}
+
+.animated-item.text.animated {
+  transform: rotate(0) translateX(0px);
+}

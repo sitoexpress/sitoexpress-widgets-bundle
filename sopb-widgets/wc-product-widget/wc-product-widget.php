@@ -12,16 +12,16 @@ class WC_Product_Widget extends SiteOrigin_Widget {
     function __construct() {
       parent::__construct(
           'wc-product-widget',
-          __('SE Product Widget', 'wc-product-widget-text-domain'),
+          __('SE Product Widget', 'se-sopb-widgets'),
           array(
-              'description' => __('Select product on a list, displays the product. Based on WC corresponding shortcode.', 'wc-product-widget-text-domain'),
+              'description' => __('Select product on a list, displays the product. Based on WC corresponding shortcode.', 'se-sopb-widgets'),
           ),
           array(
           ),
           array(
             'product_id' => array(
                   'type' => 'link',
-                  'label' => __('Select the product you want to display', 'wc-product-widget-text-domain'),
+                  'label' => __('Select the product you want to display', 'se-sopb-widgets'),
                   'post_types' => array('product'),
                   'readonly' => true,
               ),

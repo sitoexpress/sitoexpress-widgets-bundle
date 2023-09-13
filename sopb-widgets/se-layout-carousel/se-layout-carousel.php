@@ -1,26 +1,20 @@
 <?php
 
 /*
-Widget Name: SE Post Carousel Widget
-Description: Displays a post carousel.
+Widget Name: SE Layout Carousel Widget
+Description: Displays a Layout carousel.
 Author: Francesco Fortino
 Author URI: https://sito.express
 */
 
-class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
-
-  static $rendering_loop;
-
-  static $current_loop_template;
-  static $current_loop_instance;
-  static $current_pagination_id;
+class SE_Layout_Carousel_Widget extends SiteOrigin_Widget {
 
   function __construct() {
     parent::__construct(
-        'se-post-carousel-widget',
-        __('SE Post Carousel Widget', 'se-sopb-widgets'),
+        'se-layout-carousel-widget',
+        __('SE Layout Carousel Widget', 'se-sopb-widgets'),
         array(
-            'description' => __('Displays a post carousel.', 'se-sopb-widgets'),
+            'description' => __('Displays a layout carousel.', 'se-sopb-widgets'),
         ),
         array(
         ),
@@ -39,164 +33,8 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
     add_filter( 'siteorigin_widgets_wrapper_data_' . $this->id_base, array( $this, 'wrapper_data_filter' ), 10, 2 );
   }
 
-  /**
-   * Are we currently rendering a post loop
-   *
-   * @return bool
-   */
-  static function is_rendering_loop() {
-    return self::$rendering_loop;
-  }
-
-  /**
-   * Which post loop is currently being rendered
-   *
-   * @return array
-   */
-  static function get_current_loop_template() {
-    return self::$current_loop_template;
-  }
-
-  /**
-   * Which post loop is currently being rendered
-   *
-   * @return array
-   */
-  static function get_current_loop_instance() {
-    return self::$current_loop_instance;
-  }
-
-  /**
-   * The pagination id used in custom format pagination links
-   *
-   * @return array
-   */
-  static function get_current_pagination_id() {
-    return self::$current_pagination_id;
-  }
-
-  private static function is_legacy_widget_block_preview() {
-  	return isset( $_GET['legacy-widget-preview'] ) && (
-  		$_GET['legacy-widget-preview']['idBase'] == 'siteorigin-panels-postloop' ||
-  		$_GET['legacy-widget-preview']['idBase'] == 'siteorigin-panels-builder'
-  	);
-  }
-
-  private static function is_layout_block_preview() {
-  	return isset( $_POST['action'] ) && $_POST['action'] == 'so_panels_layout_block_preview';
-  }
-
-  /**
-   * Get all the existing files
-   *
-   * @return array
-   */
-
-  function get_loop_templates(){
-
-  	$templates = array();
-
-  	$template_files = array(
-  		'loop*.php',
-  		'*/loop*.php',
-  		'content*.php',
-  		'*/content*.php',
-  	);
-
-  	$template_dirs = array( get_template_directory(), get_stylesheet_directory() );
-  	$template_dirs = apply_filters( 'siteorigin_panels_postloop_template_directory', $template_dirs );
-  	$template_dirs = array_unique( $template_dirs );
-
-  	foreach( $template_dirs  as $dir ){
-  		foreach( $template_files as $template_file ) {
-  			foreach( (array) glob($dir.'/'.$template_file) as $file ) {
-  				if( file_exists( $file ) ) $templates[] = str_replace($dir.'/', '', $file);
-  			}
-  		}
-  	}
-
-  	$templates = array_unique( apply_filters( 'siteorigin_panels_postloop_templates', $templates ) );
-  	$templates = array_filter( $templates, array($this, 'validate_template_file') );
-    $template_options = array();
-
-		if( ! empty( $templates ) ) {
-			foreach( $templates as $template ) {
-
-        // Is this template being added by a plugin?
-				$filename = SE_Post_Carousel_Widget::locate_template( $template );
-
-        // Is it a content template?
-        if(!preg_match( '/\/content*/', '/' . $template)) continue;
-
-				$headers = get_file_data( $filename, array(
-					'loop_name' => 'Loop Name',
-          'carousel_compat' => 'Carousel Compatible',
-				) );
-
-        // Is it carousel compatible?
-        if(!$headers['carousel_compat']) continue;
-
-        $template_options[ $template ] = esc_html( ! empty( $headers['loop_name'] ) ? $headers['loop_name'] : $template );
-			}
-		}
-
-    $template_options['default'] = 'Default Template';
-
-  	return $template_options;
-
-  }
-
-  /**
-   * Checks if a template file is valid
-   *
-   * @param $filename
-   *
-   * @return bool
-   */
-  public function validate_template_file( $filename )
-  {
-  	return (
-  		// File is a valid PHP file
-  		validate_file( $filename ) == 0 &&
-  		substr( $filename, -4 ) == '.php' &&
-
-  		// And it exists
-  		self::locate_template( $filename ) != ''
-  	);
-  }
-
-  /**
-   * Find the location of a given template. Either in the theme or in the plugin directory.
-   *
-   * @param $template_names
-   * @param bool $load
-   * @param bool $require_once
-   *
-   * @return string The template location.
-   */
-  public static function locate_template( $template_names, $load = false, $require_once = true )
-  {
-    $located = '';
-
-    foreach ( (array) $template_names as $template_name ) {
-
-      $located = locate_template($template_name, false);
-
-      if ( ! $located && file_exists( WP_PLUGIN_DIR . '/' . $template_name ) ) {
-        // Template added by a plugin
-        $located = WP_PLUGIN_DIR . '/' . $template_name;
-      }
-    }
-
-    if ( $load && '' != $located ) {
-      load_template( $located, $require_once );
-    }
-
-    return $located;
-  }
 
   function wrapper_class_filter( $classes, $instance ) {
-    if(!isset($instance['template'])) return;
     return $classes;
   }
 
@@ -209,14 +47,22 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
   }
 
   function modify_form($form) {
-    $templates = $this->get_loop_templates();
     return
       array(
-        'template' => array(
-          'type' => 'select',
-          'label' => __( 'Choose an available template', 'se-sopb-widget' ),
-          'default' => 'default',
-          'options' => $templates,
+        'title' => array(
+            'type' => 'text',
+            'label' => __( 'Enter here a title for the slider (needed, but not shown)', 'se-sopb-widgets' )
+        ),
+        'slides' => array(
+          'type' => 'repeater',
+          'label' => __( 'Slides' , 'se-sopb-widget' ),
+          'item_name'  => __( 'Slide', 'se-sopb-widget' ),
+          'fields' => array(
+            'layout' => array(
+                'type' => 'builder',
+                'label' => __( 'Componi la slide', 'se-sopb-widget'),
+            ),
+          ),
         ),
         'settings' => array(
             'type' => 'section',
@@ -254,7 +100,7 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
                       'type' => 'slider',
                       'label' => __( 'Carousel speed', 'se-sopb-widget' ),
                       'default' => 5000,
-                      'min' => 100,
+                      'min' => 0,
                       'max' => 15000,
                       'step' => 100,
                       'integer' => true
@@ -302,10 +148,6 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
                 ),
             ),
         ),
-        'query' => array(
-              'type' => 'posts',
-              'label' => __('Post Query', 'se-sopb-widget'),
-          ),
     		);
   }
 
@@ -313,8 +155,7 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
     if ( empty( $instance ) ) return array();
 
     return array(
-      'template' => (isset($instance['template'])) ? $instance['template'] : 'default',
-      'query' => $this->process_pseudo_query($instance),
+      'slides' => $instance['slides'],
       'net_interval' => $instance['settings']['autoplaySpeed'],
       'settings' => $this->process_carousel_settings($instance),
       'classes' => $this->process_classes($instance),
@@ -342,7 +183,7 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
       'perPage' => (isset($settings['slidesToShow_desktop'])) ? $settings['slidesToShow_desktop'] : 3,
       'perMove' => 1,
       'easing' => 'ease',
-      'pauseOnHover' => (isset($settings['options']) && in_array('dont_pauseOnFocus', $settings['options'])) ? false : true,
+      'pauseOnHover' => (isset($settings['options']) && in_array('dont_pauseOnHover', $settings['options'])) ? false : true,
       'pauseOnFocus' => (isset($settings['options']) && in_array('dont_pauseOnFocus', $settings['options'])) ? false : true,
       'speed' => (isset($settings['speed'])) ? $settings['speed'] : 5000,
       'trimSpace' => (isset($settings['options']) && in_array('focus_center', $settings['options'])) ? false : true,
@@ -367,7 +208,7 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
         'speed' => (isset($settings['autoscrollSpeed'])) ? $settings['autoscrollSpeed']/10 : 1,
         'autoStart' => false,
         'rewind' => $rewind,
-        'pauseOnHover' => (isset($settings['options']) && in_array('dont_pauseOnFocus', $settings['options'])) ? false : true,
+        'pauseOnHover' => (isset($settings['options']) && in_array('dont_pauseOnHover', $settings['options'])) ? false : true,
         'pauseOnFocus' => (isset($settings['options']) && in_array('dont_pauseOnFocus', $settings['options'])) ? false : true,
       );
       $setup['intersection']['inView']['autoScroll'] = true;
@@ -391,46 +232,6 @@ class SE_Post_Carousel_Widget extends SiteOrigin_Widget {
       return 'template';
   }
 
-  private function process_pseudo_query($instance) {
-
-    if(!isset($instance['query'])) return;
-
-    $query_args = $instance;
-
-    $query_args = siteorigin_widget_post_selector_process_query($instance['query']);
-    $query_args['additional'] = empty($instance['additional']) ? array() : $instance['additional'];
-
-    $query_args = wp_parse_args($query_args['additional'], $query_args);
-		unset($query_args['additional']);
-
-    // Exclude the current post to prevent possible infinite loop
-
-    global $siteorigin_panels_current_post;
-
-    if( !empty($siteorigin_panels_current_post) ){
-      if( !empty( $query_args['post__not_in'] ) ){
-        if( !is_array( $query_args['post__not_in'] ) ){
-          $query_args['post__not_in'] = explode( ',', $query_args['post__not_in'] );
-          $query_args['post__not_in'] = array_map( 'intval', $query_args['post__not_in'] );
-        }
-        if(is_numeric($siteorigin_panels_current_post))
-        $query_args['post__not_in'][] = $siteorigin_panels_current_post;
-      }
-      else {
-        if(is_numeric($siteorigin_panels_current_post))
-        $query_args['post__not_in'] = array( $siteorigin_panels_current_post );
-      }
-    }
-
-    if( !empty($query_args['post__in']) && !is_array($query_args['post__in']) ) {
-      $query_args['post__in'] = explode(',', $query_args['post__in']);
-      $query_args['post__in'] = array_map('intval', $query_args['post__in']);
-    }
-
-    return $query_args;
-
-  }
-
 }
 
-siteorigin_widget_register('se-post-carousel-widget', __FILE__, 'SE_Post_Carousel_Widget');
+siteorigin_widget_register('se-layout-carousel-widget', __FILE__, 'SE_Layout_Carousel_Widget');
